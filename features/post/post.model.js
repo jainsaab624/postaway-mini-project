@@ -2,9 +2,9 @@ import { loggdInUserID } from "../../middleware/jwt.middleware.js";
 
 export default class PostModel {
   constructor(UserID, Caption, ImageURL) {
-    (this.UserID = UserID),
-      (this.Caption = Caption),
-      (this.ImageURL = ImageURL);
+    this.UserID = UserID;
+    this.Caption = Caption;
+    this.ImageURL = ImageURL;
   }
   //THIS FUNCTION RETURN THE ARRAY OF POST WITH A SPECIFIC USER ID
   getPostByUserID(UserID) {
