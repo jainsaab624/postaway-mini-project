@@ -24,6 +24,7 @@ export default class UserController {
         try {
             //CHECKING IF IT IS A VALID USER OR NOT
             const validUser = userModel.confirmUser(req.body);
+        
             //IF USER IS NOT VALID 
             if (!validUser) {
                 return res.status(400).send("Wrong Credentials");

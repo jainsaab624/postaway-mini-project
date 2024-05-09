@@ -5,6 +5,8 @@ export default class PostModel {
     this.UserID = UserID;
     this.Caption = Caption;
     this.ImageURL = ImageURL;
+    this.isDraft = false;
+    this.isArchived = false;
   }
   //THIS FUNCTION RETURN THE ARRAY OF POST WITH A SPECIFIC USER ID
   getPostByUserID(UserID) {
@@ -59,7 +61,81 @@ export default class PostModel {
 
     return null;
   }
+
+  filterPostByCaption(searchContent) {
+    console.log(searchContent);
+    let modifiedQuery = searchContent.trim().toLowerCase();
+    const post = postModelArray.filter((p) =>
+      p.Caption.toLowerCase().includes(modifiedQuery)
+    );
+    return post;
+  }
+
+  bookMark(postid) {
+    // console.log(postid)
+
+    const post = postModelArray.find(
+      (p) => p.PostID == postid && p.UserID == loggdInUserID
+    );
+    if (!post) {
+      return "post not found";
+    }
+
+    const isAlreadyBookmarked = bookMarkArray.find(
+      (l) => l.PostID == postid && l.UserID == loggdInUserID
+    );
+    console.log(isAlreadyBookmarked);
+    if (isAlreadyBookmarked) {
+      // If the post is already bookmarked, remove it from the bookmark array
+      const postIndex = bookMarkArray.findIndex(
+        (p) => p.PostID == postid && p.UserID == loggdInUserID
+      );
+
+      bookMarkArray.splice(postIndex, 1);
+      return "post is already bookmarked and removed";
+    } else {
+      // If the post is not already bookmarked, add it to the bookmark array
+      bookMarkArray.push(post);
+      return post;
+    }
+  }
+
+  getAllBookmarks() {
+    return bookMarkArray;
+  }
+
+  savePostAsDraft(postData) {
+    const draftPost = { ...postData, loggdInUserID, isDraft: true };
+    if (draftPost) {
+      draftPost.postId = postModelArray.length + 1;
+      postModelArray.push(draftPost);
+      return draftPost;
+    }
+    return null;
+  }
+
+  getDraftsPost() {
+    return postModelArray.filter((post) => post.isDraft);
+  }
+
+  savePostAsArchive(postId) {
+    const post = postModelArray.find(
+      (p) => p.PostID == postId && p.UserID == loggdInUserID
+    );
+    if (post) {
+      post.isArchived = true;
+      return post;
+    }
+    return null;
+  }
+
+  getArchivePosts() {
+    return postModelArray.filter((post) => post.isArchived);
+  }
 }
+
+const bookMarkArray = [];
+
 const postModelArray = [
   {
     UserID: 1,
