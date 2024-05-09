@@ -84,7 +84,7 @@ export default class PostModel {
     const isAlreadyBookmarked = bookMarkArray.find(
       (l) => l.PostID == postid && l.UserID == loggdInUserID
     );
-    console.log(isAlreadyBookmarked);
+    // console.log(isAlreadyBookmarked);
     if (isAlreadyBookmarked) {
       // If the post is already bookmarked, remove it from the bookmark array
       const postIndex = bookMarkArray.findIndex(

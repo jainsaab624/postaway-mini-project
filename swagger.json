@@ -577,7 +577,7 @@
         "summary": "Bookmark a post, if already bookmarked, unbookmark it.",
         "parameters": [
           {
-            "name": "postId",
+            "name": "ID",
             "in": "path",
             "required": true,
             "description":"The ID of the post to be bookmarked",
@@ -706,7 +706,7 @@
         "description": "this route adds the post to archive and return the archived posts",
         "parameters": [
           {
-            "name": "posId",
+            "name": "ID",
             "in": "path",
             "required": true,
             "description": "the id of the post to be archived",

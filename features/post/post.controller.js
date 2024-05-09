@@ -118,7 +118,7 @@ export default class PostController {
 
   bookMark(req, res) {
     try {
-      const postid = req.params.postID;
+      const postid = req.params.id;
       console.log(postid)
       const result = postModel.bookMark(postid);
 
@@ -131,7 +131,7 @@ export default class PostController {
         return res.status(404).send("Post Not found");
       }
 
-      return res.status(201).send(result);
+      return res.status(201).send("post has been added to bookmark");
     } catch (err) {
       throw new ApplicationError("Failed To bookmark the Post.", 500);
     }
@@ -152,8 +152,8 @@ export default class PostController {
 
   savePostAsDraft(req, res) {
     try{
-      const { caption } = req.body;
-    const postData = { caption, imageUrl: req.file.filename };
+      const { Caption } = req.body;
+    const postData = { Caption, imageUrl: req.file.filename };
     const draftPost = postModel.savePostAsDraft(postData);
     if (!draftPost) {
       return res.status(404).send("draft posts not found");
